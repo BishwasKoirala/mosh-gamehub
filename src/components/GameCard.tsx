@@ -4,6 +4,7 @@ import { Game } from '../hooks/useGames'
 import { Card, CardBody, HStack, Heading, Image, Text } from '@chakra-ui/react'
 import PlatformiconList from './PlatformiconList'
 import CriticScore from './CriticScore'
+import getCroppedImageUrl from '../services/image-url'
 
 
 interface Props{
@@ -13,7 +14,8 @@ interface Props{
 const GameCard = ({game} : Props) => {
   return (
     <Card borderRadius={10} overflow="hidden">
-      <Image src={game.background_image}></Image>
+      {/* passing the cropped image with the image url to crop */}
+      <Image src={getCroppedImageUrl(game.background_image)}></Image>
       <CardBody>
         <Heading fontSize="2xl">{game.name}</Heading>
         {/* destructuring and getting the prop of platform */}
