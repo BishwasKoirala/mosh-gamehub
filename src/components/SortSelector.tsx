@@ -3,22 +3,34 @@ import { BsChevronDown } from "react-icons/bs";
 import { Platform } from "../hooks/useGames";
 
 interface Props {
-  onselectPlatform: (platfrom: Platform) => void;
-  selectedPlatfrom: Platform | null;
+  onSelectSortOrder : (sortOrder : string) => void,
+  sortedOrder : string
+
 }
 
-const SortSelector = () => {
+const SortSelector = ({onSelectSortOrder , sortedOrder} : Props) => {
+  const sortOrder = [
+    // reverse the sorting order with hyphen -
+    { value: "", label: "Relavance" },
+    { value: "-added", label: "Date added" },
+    { value: "name", label: "Name" },
+    { value: "-released", label: "Released Date" },
+    { value: "-rating", label: "Average rating" },
+    { value: "-metacritic", label: "Average rating" },
+  ];
+
+  const currentSortOrder = sortOrder.find(order => order.value === sortedOrder);
   return (
     <Menu>
-      <MenuButton as={Button} rightIcon={<BsChevronDown />}>Order by : relavence</MenuButton>
+      <MenuButton as={Button} rightIcon={<BsChevronDown />}>
+        Order by : {currentSortOrder ? currentSortOrder.label : 'Relavance'}
+      </MenuButton>
       <MenuList>
-        <MenuItem>Relavance</MenuItem>
-        <MenuItem>Date added</MenuItem>
-        <MenuItem>Name</MenuItem>
-        <MenuItem>Release Date</MenuItem>
-        <MenuItem>Popularity</MenuItem>
-        <MenuItem>Average rating</MenuItem>
-        
+        {sortOrder.map((order) => (
+          <MenuItem onClick={() => onSelectSortOrder(order.value)} key={order.value} value={order.value}>
+            {order.label}
+          </MenuItem>
+        ))}
       </MenuList>
     </Menu>
   );
